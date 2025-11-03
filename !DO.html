@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Carta Secreta 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --pink:#fce4ec; --accent:#e91e63; }
+  *{box-sizing:border-box}
+  body{ font-family: 'Roboto', sans-serif; margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; background: linear-gradient(180deg, #fff 0%, #ffeef5 100%); padding:20px; color:#222; }
+  .screen{ display:none; width:100%; max-width:900px; }
+  .active{ display:block; }
+  .password-screen{ background: rgba(255,255,255,0.9); border-radius:18px; padding:28px; text-align:center; box-shadow:0 8px 30px rgba(0,0,0,0.12); }
+  .input-display{ font-size:34px; letter-spacing:10px; color:var(--accent); margin-top:18px; font-weight:700; }
+  .keypad{ display:grid; grid-template-columns:repeat(3,72px); gap:12px; justify-content:center; margin-top:20px; }
+  .key{ background:#f8bbd0; border:none; border-radius:12px; padding:14px; font-size:20px; cursor:pointer; color:var(--accent); font-weight:700; box-shadow:0 6px 12px rgba(0,0,0,0.08); }
+  .key:active{ transform:translateY(2px) }
+  .notepad-layout{ display:flex; gap:20px; align-items:flex-start; }
+  .side-image{ flex:0 0 260px; max-width:260px; border-radius:16px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .side-image img{ width:100%; height:auto; display:block; }
+  .notepad{ background: #fff0f6; border:4px solid #f8bbd0; padding:26px; border-radius:18px; width:100%; box-shadow:0 10px 30px rgba(0,0,0,0.06); animation:fadeIn 700ms ease forwards; opacity:0; }
+  .notepad h3{ margin:0 0 6px 0; color:#9c27b0; font-size:20px }
+  .notepad h4{ color:var(--accent); margin:6px 0 14px 0; font-size:26px }
+  .notepad p{ color:#4b4b4b; font-size:18px; line-height:1.6; margin:8px 0 }
+  .controls{ margin-top:12px; display:flex; gap:10px; align-items:center; }
+  .btn{ background:#fff; border:1px solid #f8bbd0; padding:8px 12px; border-radius:10px; cursor:pointer; }
+  #error{ margin-top:20px; color:red; font-weight:bold; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(10px) } to{ opacity:1; transform:translateY(0) } }
+  @media (max-width:800px){ .notepad-layout{ flex-direction:column; align-items:center } .side-image{ max-width:220px; width:60% } .notepad{ padding:18px } }
+</style>
+</head>
+<body>
+
+<!-- PANTALLA DE CONTRASEÑA -->
+<div id="passwordScreen" class="screen password-screen active">
+  <h2>🔒 Ingresa la contraseña</h2>
+  <div id="inputDisplay" class="input-display">••••••</div>
+
+  <div class="keypad">
+    <button class="key" onclick="enterDigit('1')">1</button>
+    <button class="key" onclick="enterDigit('2')">2</button>
+    <button class="key" onclick="enterDigit('3')">3</button>
+    <button class="key" onclick="enterDigit('4')">4</button>
+    <button class="key" onclick="enterDigit('5')">5</button>
+    <button class="key" onclick="enterDigit('6')">6</button>
+    <button class="key" onclick="enterDigit('7')">7</button>
+    <button class="key" onclick="enterDigit('8')">8</button>
+    <button class="key" onclick="enterDigit('9')">9</button>
+    <button class="key" onclick="clearInput()">←</button>
+    <button class="key" onclick="enterDigit('0')">0</button>
+    <button class="key" onclick="resetAll()">⟳</button>
+  </div>
+
+  <p style="margin-top:14px; color:#666; font-size:14px">
+    💍 Pista: Tú y yo.
+</p>
+
+ <p style="margin-top:14px; color:#666; font-size:14px">
+
+
+No, bromita. Gran pista, no? bueno, ahi te va otra; Donde nos convertimos en espositas.  </p>
+  <div id="error"></div>
+</div>
+
+<!-- PANTALLA DE NOTA -->
+<div id="notepadScreen" class="screen" aria-hidden="true">
+  <div class="notepad-layout">
+    <div class="side-image">
+      <img src="ositos.png" alt="Ositos abrazados">
+    </div>
+    <div class="notepad">
+      <h3>📅 3 DE NOVIEMBRE</h3>
+      <h4>💌 FELIZ CUMPLEAÑOS, KIKI </h4>
+
+      <p>ANTE TODO TE QUIERO FELICITAR PORQUE HOY ES TU DIA, ESPERO QUE TE LA PASES BIEN, Y NO SOLO HOY SINO TAMBIEN TODOS LOS DIAS. QUIERO QUE SEPAS QUE TE AMO MUCHO , TE AMO MÁS DE LO QUE LA MISMA PALABRA PUEDA EXPRESAR, TE AMO CON TODO MI CORAZÓN. ESTOY MUY ORGULLOSA DE TI, POR TODO LO QUE HAS HECHO, YO SÉ QUE NADA ES FÁCIL, PERO TÚ SABES COMO SOBRELLEVAR TODO ESO. ESTOY FELIZ DE PRESENCIAR QUE CUMPLES OTRO AÑITO MÁS, AHORA SÍ YA ESTÁS VIEJITA. NO OLVIDES QUE ERES MUY IMPORTANTE PARA MI, Y NO SOLO PARA MÍ TAMBIEN PARA OTRAS PERSONAS, TÚ VALES MUCHISIMO. PARA MÍ TÚ ERES EL SOL DE VERANO DESPUES DE DIAS LLUVIOSOS.
+</p>
+      <p>YO ESPERO QUE TUS DESEOS Y TUS METAS QUE TE PROPONGAS LOS PUEDAS CUMPLIR, QUE YA ESTÁ DE MÁS QUE ASI SERÁ, YA VERAS QUE SERA ASÍ. YO TE APOYARE EN TODO LO QUE NECESITES, CUENTAS CONMIGO PARA TODO, TÚ YA SABES. TIENES MI TOTAL E INCONDICIONAL APOYO. CONTIGO DESCUBRI LO QUE ES AMAR DE VERDAD E INCONDICIONALMENTE. Y ERES TÚ Y SOLO TÚ CON LA PERSONA QUE QUIERO ESTAR, NO NECESITO MÁ POR ESO ES QUE MI CORAZÓN ES COMPLETAMENTE YOURS... AYER, HOY, MAÑANA Y POR SIEMPRE LO SERÁ.
+
+</p>
+      <p>ACASO ERES ¨ENCHANTED¨, PORQUE CONTIGO TODO SE SIENTE MAGICO. GUIÑO, GUIÑO.
+
+</p>
+      <p>TE AMO MUCHISIMO, KIKI. ESPERO QUE NUNCA SE TE OLVIDE QUE TE AMO MUCHO.
+
+GRACIAS POR TODO LO QUE HAS HECHO POR MÍ, DESDE QUE NOS CONOCIMOS TE HAS VUELTO MUY IMPORTANTE PARA MÍ Y SIEMPRE LO SERÁS.
+
+
+</p>
+<p>TE AMOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
+QUE NUNCA SE TE OLVIDE QUE TE AMO, EH.
+</p>
+
+      <audio id="audio" src="musica.mp3" loop autoplay></audio>
+    </div>
+  </div>
+</div>
+
+<script>
+  const correctPassword = '121123';
+  let input = '';
+  let intentos = 0;
+
+  function enterDigit(digit){
+    if(input.length<6) input += digit;
+    document.getElementById('inputDisplay').textContent = input.padEnd(6,'•');
+    if(input.length === 6) setTimeout(checkPassword,150);
+  }
+
+  function clearInput(){
+    input = input.slice(0,-1);
+    document.getElementById('inputDisplay').textContent = input.padEnd(6,'•');
+  }
+
+  function resetAll(){
+    input = '';
+    document.getElementById('inputDisplay').textContent = '••••••';
+    document.getElementById('error').innerHTML = '';
+  }
+
+  function respuestaOpc(op){
+    alert("Seleccionaste la opción "+op);
+    resetAll();
+  }
+
+  function respuestaText(){
+    const text = document.getElementById('respuestaText').value;
+    alert("Escribiste: "+text);
+    resetAll();
+  }
+
+  function checkPassword(){
+    const display = document.getElementById('inputDisplay');
+    const errorDiv = document.getElementById('error');
+    if(input === correctPassword){
+      document.getElementById('passwordScreen').classList.remove('active');
+      document.getElementById('notepadScreen').classList.add('active');
+      document.getElementById('audio').play().catch(()=>{});
+    }else{
+      intentos++;
+      if(intentos>=3){
+        errorDiv.innerHTML = '<span style="font-size:20px;">TE HAS EQUIVOCADO VARIAS VECES</span><br><br>' +
+          '<p>¿Por qué crees que te equivocaste?</p>' +
+          '<button onclick="respuestaOpc(1)">1 - Lo olvidaste</button> ' +
+          '<button onclick="respuestaOpc(2)">2 - Lo mega olvidaste</button> ' +
+          '<button onclick="respuestaOpc(3)">3 - Ya no me amas</button> <br><br>' +
+          '<input type="text" id="respuestaText" placeholder="O escribe tu respuesta aquí"> ' +
+          '<button onclick="respuestaText()">Enviar</button>';
+      }else{
+        display.textContent = '✖✖✖✖✖✖';
+        setTimeout(()=>{
+          input='';
+          display.textContent='••••••';
+        },900);
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
